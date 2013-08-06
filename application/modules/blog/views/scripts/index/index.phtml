@@ -1,0 +1,39 @@
+
+  <!--
+  <div class="span3 right">
+    <?php echo $this->cloud ?>
+
+    <div class="well hidden-phone">
+      <h4>
+        <a href="<?php echo $this->url( array(
+          'controller' => 'category'
+          ) );?>">
+
+          <i class="icon-folder-open"></i> Categorie&euml;en
+
+        </a>
+      </h4>
+      <ul class="nav nav-list">
+      
+        <?php foreach( $this->categories as $category): ?>
+          <li>
+            <a href="<?php echo $this->url( array(
+                'controller' => 'category',
+                'id' => $category->getId(),
+                'slug' => $category->getSlug()
+              ), 'blogdefaultviewslug' ); ?>">
+              <?php echo $category->getName(); ?>
+            </a>
+          </li>
+        <?php endforeach; ?>
+
+      </ul>
+    </div>
+  </div>
+-->
+<?php foreach( $this->blogs as $blog): ?>
+  <section>
+    <?php $this->partial()->setObjectKey( 'item' ); ?>
+    <?php echo $this->partial( 'short-item.phtml', $blog ); ?>
+  </section>
+<?php endforeach;?>

@@ -1,0 +1,40 @@
+<div class="hero-unit">
+	<h1><?php echo $this->message ?> <small>An error occurred</small></h1>
+	<?php
+	switch( $this->httpCode ):
+		case 404:
+	?>
+	<p>
+		The page you were looking for could not be found. You could go to my <a href="<?php echo $this->url(array(), 'default', true) ?>">my homepage</a> ... or somewhere else.
+	</p>
+<!--
+	<p>
+
+		<a class="btn btn-primary btn-large" href="<?php echo $this->url(array(), 'bloghost', true) ?>"><i class="icon-book icon-white"></i> My blog</a>
+
+		<a class="btn btn-primary btn-large" href="<?php echo $this->url(array('controller' => 'portfolio'), 'default', true) ?>"><i class="icon-briefcase icon-white"></i> My portfolio</a>
+
+		<a class="btn btn-primary btn-large" href="<?php echo $this->url(array('controller' => 'about-me'), 'default', true) ?>"><i class="icon-user icon-white"></i> About me</a>
+
+	</p>
+-->
+	<?php
+		break;
+	endswitch;
+	?>
+</div>
+
+<?php if( APPLICATION_ENV == 'development' ): ?>
+
+<h3>Exception information:</h3>
+<p><b>Message:</b> <?php echo $this->exception->getMessage() ?></p>
+
+<h3>Stack trace:</h3>
+<pre><?php echo $this->exception->getTraceAsString() ?>
+  </pre>
+
+<h3>Request Parameters:</h3>
+<pre><?php echo var_export($this->request->getParams(), 1) ?>
+  </pre>
+
+<?php endif; ?>

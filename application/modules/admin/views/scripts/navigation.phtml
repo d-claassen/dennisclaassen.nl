@@ -1,0 +1,25 @@
+<?php foreach ($this->container as $page): ?>
+	<tr>
+		<?php for( $parent = $page->getParent(), $i = 0; !$parent instanceof Application_Model_Navigation; $parent = $parent->getParent(), $i++ ); ?>
+		<td>
+			<span style="padding-left: <?php echo $i * 15 ?>px; white-space: nowrap;">
+				<?php echo $page->getLabel() ?>
+			</span>
+		</td>
+		<td><?php echo $page->getHref() ?></td>
+		<td style="white-space: nowrap;">
+			<a href="<?php echo $this->url( array( 'action' => 'edit', 'id' => $page->getId() ) ) ?>" class="btn btn-mini">
+				<i class="icon-pencil"></i>
+			</a>
+		</td>
+		<td style="white-space: nowrap; text-align: center;">
+			<a href="<?php echo $this->url( array( 'action' => 'delete', 'id' => $page->getId() ) ) ?>" class="btn btn-mini btn-confirm" data-confirm-class="btn-warning">
+				<i class="icon-remove"></i>
+				<span class="txt-confirm">Sure?</span>
+			</a>
+		</td>
+	</tr>
+
+	<?php echo $this->partial( 'navigation.phtml', array( 'container' => $page->getPages() ) ) ?>
+
+<?php endforeach; ?>

@@ -1,0 +1,65 @@
+<!-- 
+<div class="hero-unit">
+  <h2>
+    <?php echo $this->category->getName() ?>
+  </h2>
+  <div>
+    <?php echo $this->category->getDescription() ?>
+    <p>
+      Populaire labels in deze categorie
+    </p>
+    <ul>
+      <?php foreach( $this->labels as $label ): ?>
+        <li>
+          <a href="<?php echo $label[ 'label' ]->getUrl() ?>">
+            <i class="icon-tag"></i>
+            <?php echo $label[ 'label' ]->getName() ?>
+
+          <span class="badge">
+            <?php echo $label[ 'count' ] ?>
+          </span>
+          </a>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+  </div>
+</div> 
+-->
+<section>
+  <figure class="vcard thumbnail">
+    <img src="http://placehold.it/400x300" />
+    <figcaption>
+      <header>
+        <h2>
+          <?php echo $this->category->getName() ?>
+        </h2>
+      </header>
+      <?php if( count( $this->labels ) ): ?>
+        <p>
+          Populaire labels in deze categorie
+        </p>
+        <ul>
+          <?php foreach( $this->labels as $label ): ?>
+            <li>
+              <a href="<?php echo $label[ 'label' ]->getUrl() ?>">
+                <i class="icon-tag"></i>
+                <?php echo $label[ 'label' ]->getName() ?>
+
+              <span class="badge">
+                <?php echo $label[ 'count' ] ?>
+              </span>
+              </a>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+      <?php endif; ?>
+    </figcaption>
+  </figure>
+</section>
+
+<section>
+  <?php foreach( $this->items as $item): ?>
+    <?php $this->partial()->setObjectKey( 'item' ); ?>
+    <?php echo $this->partial( 'short-item.phtml', $item ); ?>
+  <?php endforeach;?>
+</section>

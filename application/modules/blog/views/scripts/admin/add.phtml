@@ -1,0 +1,85 @@
+<h2>Blog item <?php echo ( $this->blog ? 'bewerken' : 'toevoegen' ) ?></h2>
+
+<p>
+	<a href="<?php echo $this->url( array( 'module' => 'blog', 'controller' => 'admin', 'action' => 'index' ), null, true ); ?>">&laquo; Terug naar overzicht</a>
+</p>
+
+<?php echo $this->form( $this->url(), array( 'method' => 'post', 'class' => 'form-horizontal' ) ); ?>
+	<fieldset>
+		<div class="control-group">
+	    <label class="control-label" for="title">Titel</label>
+	    <div class="controls">
+	    	<?php echo $this->FormText( 'blog-title', ( $this->blog ? $this->blog->getTitle() : '' ) ) ?>
+	    </div>
+		</div>
+
+		<div class="control-group">
+	    <label class="control-label" for="title">Status</label>
+	    <div class="controls">
+	    	<?php echo $this->FormSelect( 'blog-status', ( $this->blog ? $this->blog->getStatus() : '' ), null, array( 
+		    		'' => '',
+		    		Blog_Model_Blog_Item::STATUS_APPROVED => Blog_Model_Blog_Item::STATUS_APPROVED,
+		    		Blog_Model_Blog_Item::STATUS_DRAFT => Blog_Model_Blog_Item::STATUS_DRAFT
+	    		) ) ?>
+	    </div>
+		</div>
+
+		<div class="control-group">
+	    <label class="control-label">Korte inleiding</label>
+	    <div class="controls">
+			<?php echo $this->ckeditor( 'blog-description', ( $this->blog ? $this->blog->getDescription() : '' ), array( 
+				'skin' => 'BootstrapCK-Skin',
+				'height' => '100',
+				'contentsCss' => '/css/bootstrap.min.css',
+				'toolbarStartupExpanded' => false,
+				'toolbar' => array(
+					array( 'Source'/*,'-','Save','NewPage','DocProps','Preview','Print','-','Templates'*/ ),
+			    	array( 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ),
+			    	array( 'Find','Replace','-','SelectAll'/*,'-','SpellChecker', 'Scayt'*/ ),
+			    	//array( 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ),
+			    	array( 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ),
+			    	'/',
+			    	array( 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ),
+			    	array( 'Link','Unlink','Anchor' ),
+			    	array( 'Image',/*'Flash',*/'Table','HorizontalRule','Smiley','SpecialChar','PageBreak' ),
+			    	'/',
+			    	array( 'Styles','Format','Font','FontSize' ),
+			    	array( 'TextColor','BGColor' ),
+			    	array( 'Maximize', 'ShowBlocks'/*,'-','About'*/ )
+				) ) ); ?>
+	    </div>
+		</div>
+
+
+		<div class="control-group">
+	    <label class="control-label">Inhoud</label>
+	    <div class="controls">
+			<?php echo $this->ckeditor( 'blog-content', ( $this->blog ? $this->blog->getContent() : '' ), array( 
+				'skin' => 'BootstrapCK-Skin',
+				'contentsCss' => '/css/bootstrap.min.css',
+				'toolbarStartupExpanded' => false,
+				'toolbar' => array(
+					array( 'Source'/*,'-','Save','NewPage','DocProps','Preview','Print','-','Templates'*/ ),
+			    	array( 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ),
+			    	array( 'Find','Replace','-','SelectAll'/*,'-','SpellChecker', 'Scayt'*/ ),
+			    	//array( 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ),
+			    	array( 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ),
+			    	'/',
+			    	array( 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ),
+			    	array( 'Link','Unlink','Anchor' ),
+			    	array( 'Image',/*'Flash',*/'Table','HorizontalRule','Smiley','SpecialChar','PageBreak' ),
+			    	'/',
+			    	array( 'Styles','Format','Font','FontSize' ),
+			    	array( 'TextColor','BGColor' ),
+			    	array( 'Maximize', 'ShowBlocks'/*,'-','About'*/ )
+				) ) ); ?>
+	    </div>
+		</div>
+
+		<div class="form-actions">
+			<?php echo $this->FormSubmit( '', 'Verzenden', array( 'class' => 'btn btn-primary') ) ?>
+		</div>
+
+	</fieldset>
+
+</form>

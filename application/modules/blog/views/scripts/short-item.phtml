@@ -1,0 +1,39 @@
+<header>
+  <h2>
+    <a href="<?php echo $this->item->getUrl() ?>">
+      <?php echo $this->item->title; ?>
+    </a>
+  </h2>
+</header>
+
+<article>
+  <p class="muted">
+    Dit is op <?php echo strftime( '%A %#d %B %Y om %H:%I', strtotime( $this->item->created_on ) ) ?> geschreven door <a href="<?php echo $this->item->getAuthor()->getUrl()?>"><?php echo $this->item->getAuthor()->getRealName() ?></a> en geplaatst in de categorie <a href="<?php echo $this->item->getCategory()->getUrl() ?>"><?php echo $this->item->getCategory()->getName() ?></a>.
+  </p>
+
+  <article>
+  	<?php echo $this->item->description; ?>
+  </article>
+
+  <p>
+  <?php if( count( $this->item->getLabels() )  ): ?>
+  
+  <span>
+    <i class="icon-tags"></i> <?php echo implode( " ", $this->item->getLabels() ) ?>
+  </span>
+<?php endif; ?>
+
+  <span>
+    <a href="<?php echo $this->item->getUrl() ?>#comments">
+      <i class="icon-comment"></i>
+      <?php echo count( $this->item->getReplies() ) ?> reactie<?php if( count( $this->item->getReplies() ) !== 1 ): ?>s<?php endif; ?></a>
+    <a class="btn btn-mini" href="<?php echo $this->item->getUrl() ?>#comment">
+      <?php if( count( $this->item->getReplies() )  ): ?>
+      Reageer ook!
+      <?php else: ?>
+      Reageer als eerste
+      <?php endif; ?>
+    </a>
+  </span>
+  </p>
+</article>

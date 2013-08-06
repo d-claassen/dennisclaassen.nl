@@ -1,0 +1,10 @@
+
+<h1>LinkedIn</h1>
+
+<p>
+  Data for the homepage is collected from my LinkedIn profile. If any edits are made to my LinkedIn profile, these are not immediately updated here. This is because requesting them on-demand makes the homepage really slow, so we save the Linkedin data in the database. To show the correct information on the homepage, this data in the database has to be updated.
+</p>
+
+<a href="<?php echo $this->url( array(
+  'action' => 'refresh'
+) ) ?>" class="btn btn-primary">Refresh LinkedIn data</a>

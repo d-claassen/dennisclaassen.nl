@@ -1,0 +1,60 @@
+<section>
+  <header>
+    <h2>
+      <?php echo $this->blog->getTitle() ?>
+    </h2>
+  </header>
+
+  <article>
+    <p class="muted">
+      Dit is op <?php echo strftime( '%A %#d %B %Y om %H:%I', strtotime( $this->blog->created_on ) ) ?> geschreven door <a href="<?php echo $this->blog->getAuthor()->getUrl()?>"><?php echo $this->blog->getAuthor()->getRealName() ?></a> en geplaatst in de categorie <a href="<?php echo $this->blog->getCategory()->getUrl() ?>"><?php echo $this->blog->getCategory()->getName() ?></a>.
+    </p>
+
+    <article>
+      <?php echo $this->blog->getDescription() ?>
+      
+      <?php echo $this->blog->getContent() ?>
+    </article>
+
+    <?php if( count( $this->blog->getLabels() )  ): ?>
+    <p>
+      <i class="icon-tags"></i> <?php echo implode( " ", $this->blog->getLabels() ) ?>
+    </p>
+    <?php endif; ?>
+  </article>
+</section>
+
+<hr />
+
+<section>
+  <header>
+    <a name="comments"></a>
+    <h3><?php echo count( $this->blog->getReplies() ) ?> reactie<?php if( count( $this->blog->getReplies() ) !== 1 ): ?>s<?php endif; ?></h3>
+  </header>
+
+  <?php foreach( $this->blog->getReplies() as $reply ): ?>
+
+    <article>
+      <div class="well" >
+        <a name="comment-<?php echo $reply->getId() ?>" href="#comment-<?php echo $reply->getId() ?>" style="" class="pull-right">#<?php echo $reply->getId() ?></a>
+        <p>
+          <?php echo $reply->getUser()->getRealName() ?>
+          <span class="muted">
+            schreef op <?php echo strftime( '%A %#d %B %Y om %H:%I', strtotime( $reply->getCreated() ) ) ?>
+          </span>
+        </p>
+
+        <div>
+          <?php echo $reply->getContent() ?>
+        </div>
+      </div>
+    </article>
+
+  <?php endforeach; ?>
+
+  <div>
+    <a name="comment"></a>
+    <?php echo $this->replyForm; ?>
+  </div>
+
+</div>

@@ -1,0 +1,18 @@
+<ul class="nav nav-list">
+	
+<?php foreach ($this->container as $page): ?>
+	<?php if( $page->isVisible() ): ?>
+    <li class="<?php echo $page->isActive( ) ? 'active' : '' ?>">
+
+        <?php echo $this->menu()->htmlify( $page ) ?>
+
+        <?php if (!empty($page->pages)):
+            echo $this->menu( new Zend_Navigation( $page->pages ) )
+                ->setPartial( 'side-navigation.phtml' );
+        endif; ?>
+
+    </li>
+	<?php endif; ?>
+<?php endforeach; ?>
+
+</ul>

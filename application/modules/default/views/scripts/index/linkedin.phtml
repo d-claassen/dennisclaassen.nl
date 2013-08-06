@@ -1,0 +1,191 @@
+<section>
+  <figure class="vcard thumbnail">
+    <img src="/img/me.jpg" alt="" itemprop="image" />
+    
+    <figcaption class="caption">
+      <header>
+        <h1 itemprop="name"> <?php echo $this->LinkedInUser->{'first-name'} ?> <?php echo $this->LinkedInUser->{'last-name'} ?> </h1>
+        <h2 itemprop="jobTitle"> <?php echo $this->LinkedInUser->headline ?> </h2>
+      </header>
+    
+      <ul>
+        <li>
+          <i class="icon-globe"></i>
+          <a href="http://www.dennisclaassen.nl/" rel="me" itemprop="url">
+            www.dennisclaassen.nl
+          </a>
+        </li>
+      
+        <li>
+          <i class="icon-envelope"></i>
+          <a href="mailto:info@dennisclaassen.nl" onclick="_gaq.push( [ '_trackPageview', '/outgoing/mail/info@dennisclaassen.nl' ] );" itemprop="email">
+            info@dennisclaassen.nl
+          </a>
+        </li>
+      
+        <li>
+          <i class="twitter-icon"></i>
+          <a href="http://twitter.com/declaassen" onclick="_gaq.push( [ '_trackPageview', '/outgoing/twitter/declaassen' ] );" rel="me" itemprop="url">
+            @declaassen
+          </a>
+        </li>
+      </ul>
+    </figcaption>
+  </figure>
+  
+</section>
+
+<section class="skills">
+  <header>
+      <h2> Skills </h2>
+  </header>
+  
+  <article>
+    <ul>
+    <?php foreach( $this->LinkedInUser->skills->skill as $skill ): ?>
+
+      <li>
+        <?php if( strtoupper( $skill->skill->name ) == $skill->skill->name ): ?>
+        <abbr class="initialism">
+        <?php endif; ?>
+          <?php echo $skill->skill->name ?>
+        <?php if( strtoupper( $skill->skill->name ) == $skill->skill->name ): ?>
+        </abbr>
+        <?php endif; ?>
+      </li>
+
+    <?php endforeach; ?>
+    </ul>
+  </article>
+
+</section>
+
+
+<section>
+  <header>
+    <h2> Experience </h2>
+  </header>
+  
+  <?php $companiesDescribed = array() ?>
+  <?php foreach( $this->LinkedInUser->positions->position as $position ): ?>
+    <?php $company = $this->companies[ strval( $position->company->id ) ] ?>
+    <article itemscope itemtype="http://schema.org/Organization">
+      <h3>
+        <?php echo $position->title ?>
+        <small> bij <span itemprop="name"> <?php echo $position->company->name ?> </span> </small>
+      </h3>
+      <p>
+        <time>
+          <?php echo ucfirst( strftime( "%B %Y", strtotime( $position->{'start-date'}->year . '-' . $position->{'start-date'}->month ) ) ) ?>
+        </time>
+        -
+        <?php if( $position->{'is-current'} == "true" ): ?>
+        heden
+        <?php else: ?>
+        <?php echo strftime( "%B %Y", strtotime( $position->{'end-date'}->year . '-' . $position->{'end-date'}->month ) ) ?>
+        <?php endif ?>
+      </p>
+      
+      <p>
+        <?php echo $position->summary ?>
+      </p>
+
+      <?php if( !in_array( intval( $company->id ), $companiesDescribed ) ): ?>
+        <?php $companiesDescribed[] = intval($company->id) ?>
+        <blockquote>
+          <p itemprop="description">
+            <?php echo strval( $company->description ) ?>
+          </p>
+          <small> <?php echo $company->name ?> op <a href="http://www.linkedin.com/company/<?php echo $company->id ; ?>" onclick="_gaq.push( [ '_trackPageview', '/outgoing/linkedin/company/<?php echo urlencode( $company->name ) ?>' ] );"> <cite title="LinkedIn"> LinkedIn </cite> </a> </small>
+        </blockquote>
+      <?php endif ?>
+
+      <dl>
+        <dd>
+          <img src="<?php echo $company->{'logo-url'} ?>" />
+        </dd>
+
+        <dd>
+          <i class="icon-globe"></i>
+          <a href="<?php echo $company->{'website-url'} ?>" onclick="_gaq.push( [ '_trackPageview', '/outgoing/url/company/<?php echo urlencode( $company->name ) ?>' ] );" itemprop="url" rel="nofollow">
+            <?php echo $company->{'website-url'} ?>
+          </a>
+        </dd>
+
+      </dl>
+    </article>
+  <?php endforeach ?>
+</section>
+
+
+<section>
+  <header>
+    <h2> Education </h2>
+  </header>
+  
+    <?php foreach( $this->LinkedInUser->educations->education as $education ): ?>
+    <?php $school = $this->educations[ intval( $education->id ) ] ?>
+    <article itemscope itemtype="http://schema.org/EducationalOrganization">
+      <h3 itemprop="name">
+        <?php echo $education->{'school-name'} ?>
+      </h3>
+
+      <?php if( $school &&
+          $school->locations->location->address[0]->street1 && 
+          $school->locations->location->address[0]->{'postal-code'} &&
+          $school->locations->location->address[0]->city ): ?>
+        <address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+
+          <span itemprop="streetAddress"><?php echo $school->locations->location->address[0]->street1 ?></span> <br />
+          <span itemprop="postalCode"><?php echo $school->locations->location->address[0]->{'postal-code'} ?></span>, 
+          <span itemprop="addressLocality"><?php echo $school->locations->location->address[0]->city ?></span>
+        </address>
+      <?php endif ?>
+
+      <p>
+        <?php if( $education->{'field-of-study'} ): ?>
+          <?php echo $education->{'field-of-study'} ?> <br />
+        <?php endif ?>
+        <?php echo $education->{'start-date'}->year ?>
+        -
+        <?php echo $education->{'end-date'}->year ?>
+      </p>
+
+      
+      <dl>
+        <dd>
+          <img src="<?php echo $school->{'logo-url'} ?>" itemprop="logo"/ >
+        </dd>
+
+        <dd>
+          <i class="icon-globe"></i>
+          <a href="<?php echo $school->{'website-url'} ?>" onclick="_gaq.push( [ '_trackPageview', '/outgoing/url/education/<?php echo urlencode( $company->name ) ?>' ] );" itemprop="url" rel="nofollow">
+            <?php echo $school->{'website-url'} ?>
+          </a>
+        </dd>
+
+      </dl>
+    </article>
+  <?php endforeach ?>
+</section>
+
+
+<div class="well" itemscope itemtype="http://schema.org/Person">
+  <ul class="thumbnails">
+    <li>
+       <a href="https://plus.google.com/104282110032153413913" title="Google+" target="_blank" onclick="_gaq.push( [ '_trackPageview', '/outgoing/google+/declaassen' ] );" rel="author" itemprop="url">
+        <img class="thumbnail" src="/img/glyphicons/glyphicons_362_google+_alt.png" width="32" height="32" alt="Google+" />
+       </a>
+    </li>
+    <li>
+       <a href="http://twitter.com/declaassen" title="Twitter" target="_blank" onclick="_gaq.push( [ '_trackPageview', '/outgoing/twitter/declaassen' ] );" rel="me" itemprop="url">
+        <img class="thumbnail" src="/img/glyphicons/glyphicons_392_twitter.png" width="32" height="32" alt="Twitter" />
+       </a>
+    </li>
+    <li>
+       <a href="http://www.linkedin.com/in/declaassen" title="LinkedIn" target="_blank" onclick="_gaq.push( [ '_trackPageview', '/outgoing/linkedin/declaassen' ] );" rel="me" itemprop="url">
+        <img class="thumbnail" src="/img/glyphicons/glyphicons_377_linked_in.png" width="32" height="32" alt="LinkedIn" />
+       </a>
+    </li>
+  </ul>
+</div>

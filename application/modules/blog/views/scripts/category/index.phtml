@@ -1,0 +1,26 @@
+<?php for( $i = 0, $l = count( $this->categories ); $i < $l; $i++ ): ?>
+  <?php $category = $this->categories[ $i ] ?>
+
+  <?php if( $i % 3 === 0 ): ?>
+    <div class="row">
+  <?php endif; ?>
+
+  <div class="span4">
+    <div class="well well-large">
+      <h2>
+        <a href="<?php echo $category->getUrl() ?>">
+          <?php echo $category->getName() ?>
+        </a>
+      </h2>
+      <div>
+        <?php echo $category->getDescription() ?>
+      </div>
+    </div>
+  </div>
+  <?php if( $i % 3 === 2): ?>
+    </div>
+  <?php endif; ?>
+<?php endfor; ?>
+<?php if( $i % 3 !== 2): ?>
+  </div>
+<?php endif; ?>

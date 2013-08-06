@@ -1,0 +1,22 @@
+<form action="<?php echo $this->form->getAction() ?>"
+	enctype="<?php echo $this->form->getEnctype() ?>"
+	method="<?php echo $this->form->getMethod() ?>"
+	id="<?php echo $this->form->getId() ?>"
+	class="<?php echo $this->form->getAttrib('class') ?>">
+	<div class="modal">
+		<div class="modal-header">
+	        <a class="close" href="javascript:void(0);" onclick="$(this).parent().parent().parent().remove()">&times;</a>
+			<h3><?php echo $this->form->getLegend() ?></h3>
+		</div>
+		<div class="modal-body">
+			<?php 
+				echo $this->form->getElement('action');
+			?>
+		</div>
+		<div class="modal-footer">
+			<?php echo $this->form->getElement( 'saveaction' )
+						->setDecorators( array() )
+						->addDecorator( 'ViewHelper' ); ?>
+		</div>
+	</div>
+</form>
